@@ -1,20 +1,71 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <h1>
-    Welcome to {{title}}!
+     {{title}}!
   </h1>
-  <img width="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
+</div>
+
+
+
+<div class="container">
+
+
+  <div class="leftPanel">
+
+    <div class="form-component">
+       <label>Base:</label>
+       <select #ccy class="input-component">
+
+        <option *ngFor="let c of currencies"
+        [value]="c">{{c}}</option>
+
+       </select>
+   </div>
+
+
+
+   <div class="form-component">
+      <label>Date:</label>
+      <input #dateOfCcy class="input-component" type="date">
+   </div>
+
+
+   <div class="form-component">
+      <button class="form-component btn" type="button" (click)="UpdateExchangeRateTables(ccy.value,dateOfCcy.value)"  > Display </button>
+   </div>
+
+  </div>
+
+      <div class="rightPanel">
+
+          <table id="ccyTable" *ngIf="searched"  cellspacing="0" cellpadding="0">
+            <thead>
+              <tr  class="tableHeader">
+                <td class="column" (click)="SortTable()">Currency <span *ngIf="ascending">{{descendingCaracter}}</span><span *ngIf="!ascending">{{ascendingCaracter}}</span></td>
+                <td class="column">Buy</td>
+                <td class="column">Sell</td>
+              </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let rate of rates; let index=index; let odd=odd; let even=even; "
+                  [ngClass]="{odd: odd, even: even, red : isInSelectedCcy(rate[0])}" >
+
+                  <td class="column">
+                    {{rate[0]}}
+                  </td>
+                  <td class="column">
+                    {{subtractSpread(rate[1]) | number:'.4-4'}}
+                  </td>
+                  <td class="column">
+                    {{addSpread(rate[1]) | number:'.4-4'}}
+                  </td>
+
+                </tr>
+            </tbody>
+
+          </table>
+
+      </div>
+</div>
