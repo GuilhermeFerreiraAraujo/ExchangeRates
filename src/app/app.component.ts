@@ -40,7 +40,7 @@ export class AppComponent {
   }
 
   UpdateExchangeRateTables = function(ccy, dateOfCcy){
-    let request = "https://exchangeratesapi.io/api/" + dateOfCcy + "?base=" + ccy
+    let request = "https://api.exchangeratesapi.io/" + dateOfCcy + "?base=" + ccy
     this.http.get(request)
     .subscribe(data => {
       this.searched = true;
